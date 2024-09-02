@@ -14,7 +14,7 @@ pipeline{
                 sh 'printenv'
                 sh 'git version'
                 sh 'docker ps'
-                sh 'doker images'
+                sh 'docker images'
                 sh  'docker ps -a'
                 sh 'docker build . -t good777lord/diamindimg'
             }

@@ -16,10 +16,12 @@ pipeline{
                 sh 'docker ps'
                 sh 'docker images'
                 sh  'docker image prune'
-                sh 'docker images'
-                sh 'docker build . -t good777lord/diamindimg'
             }
+            input(message: "Are you sure to proceed?", ok: "Proceed")
+            sh 'docker images'
+            sh 'docker build . -t good777lord/diamindimg'
         }
+        
          stage("push image to DockerHub"){
             steps{
 

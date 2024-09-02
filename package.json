@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-jenkins",
+  "version": "1.0.0",
+  "description": "A node js application with jenkins pipeline created to automate docker image built a containerisation process)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clement2019/nodejs-jenkins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clement2019/nodejs-jenkins/issues"
+  },
+  "homepage": "https://github.com/clement2019/nodejs-jenkins#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -17,7 +17,7 @@ pipeline{
                 sh 'docker images'
                 sh  'docker image prune'
             
-            input(message: "Are you sure you want to continue?", [y/N]: "y")
+            input(message: "Are you sure you want to continue?", ok: "y")
             }
         
         }

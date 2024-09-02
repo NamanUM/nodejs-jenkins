@@ -1,5 +1,6 @@
 pipeline{
     agent any
+    tools {nodejs "node"}
     stages{
          stage("GitHub checkout") {
             steps {
@@ -7,6 +8,13 @@ pipeline{
  
                     git branch: 'master', url: 'https://github.com/clement2019/nodejs-jenkins.git' 
                 }
+            }
+        }
+        stage('intialising npm installation.......') {
+            steps {
+                sh 'npm install'
+  
+       
             }
         }
         stage("Build docker on going......now"){

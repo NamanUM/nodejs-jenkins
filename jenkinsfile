@@ -2,11 +2,11 @@ pipeline{
     agent any
     tools {nodejs "node"}
     stages{
-         stage("GitHub checkout") {
+         stage("GitHub git cloning") {
             steps {
                 script {
- 
-                    git branch: 'master', url: 'https://github.com/clement2019/nodejs-jenkins.git' 
+                    checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'GITHUB_CREDENTIAL', url: 'https://github.com/clement2019/nodejs-jenkins.git']])
+                   
                 }
             }
         }
@@ -17,7 +17,7 @@ pipeline{
        
             }
         }
-        stage("Build docker on going......now"){
+        stage("Build docker on going again"){
             steps{
                 sh 'printenv'
                 sh 'git version'

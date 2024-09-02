@@ -9,7 +9,7 @@ pipeline{
                 }
             }
         }
-        stage("Build docker on going......"){
+        stage("Build docker on going......now"){
             steps{
                 sh 'printenv'
                 sh 'git version'

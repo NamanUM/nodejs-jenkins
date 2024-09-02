@@ -15,7 +15,8 @@ pipeline{
                 sh 'git version'
                 sh 'docker ps'
                 sh 'docker images'
-                sh  'docker ps -a'
+                sh  'docker image prune'
+                sh 'docker images'
                 sh 'docker build . -t good777lord/diamindimg'
             }
         }

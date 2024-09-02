@@ -13,6 +13,8 @@ pipeline{
             steps{
                 sh 'printenv'
                 sh 'git version'
+                sh 'docker ps'
+                sh  'deploy.sh'
                 sh 'docker build . -t good777lord/diamindimg'
             }
         }

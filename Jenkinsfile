@@ -5,7 +5,7 @@ pipeline{
             steps {
                 script {
  
-                    git branch: 'master', url: 'https://github.com/clement2019/nodejs-jenkins.git' 
+                    git branch: 'master', url: 'https://github.com/NamanUM/nodejs-jenkins.git' 
                 }
             }
         }
@@ -15,32 +15,28 @@ pipeline{
                 sh 'git version'
                 sh 'docker ps'
                 sh 'docker images'
-                sh  'docker image prune'
-            
-            input(message: "Are you sure you want to continue?", ok: "y")
+                sh  'docker image prune -f'
+                
+                script {
+                input(message: "Are you sure you want to continue?", ok: "y")
+                }
             }
-        
         }
         stage("build docker images"){
             steps{
                
             sh 'docker images'
-            sh 'docker build . -t good777lord/diamindimg'
+            sh 'docker build -t naman211/fins:latest .'
            }
         }
         
         stage("push image to DockerHub"){
             steps{
-
-               script {
-                  
-                 withCredentials([string(credentialsId: 'dockerID', variable: 'dockerID')]) {
-                    sh 'docker login -u good777lord -p ${dockerID}'
+                 withDockerRegistry([credentialsId: 'dockerID', url: '']) {
+                    sh 'docker push naman211/fins:latest'
+                 }
             }
-              sh 'docker push good777lord/diamindimg:latest'
-            }
-        }
-    }
+       }
     }
 }
 

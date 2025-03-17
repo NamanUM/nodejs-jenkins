@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clement2019/nodejs-jenkins.git"
+    "url": "git+https://github.com/NamanUM/nodejs-jenkins.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/clement2019/nodejs-jenkins/issues"
+    "url": "https://github.com/NamanUM/nodejs-jenkins.git"
   },
-  "homepage": "https://github.com/clement2019/nodejs-jenkins#readme",
+  "homepage": "https://github.com/NamanUM/nodejs-jenkins.git#readme",
   "dependencies": {
     "express": "^4.19.2"
   }

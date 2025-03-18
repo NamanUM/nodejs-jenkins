@@ -1,10 +1,14 @@
 pipeline{
     agent any
+    
+    environment {
+        DOCKER_CREDENTIALS_ID = "docker_hub"
+    }
+    
     stages{
          stage("GitHub checkout") {
             steps {
                 script {
- 
                     git branch: 'master', url: 'https://github.com/NamanUM/nodejs-jenkins.git' 
                 }
             }
@@ -18,7 +22,7 @@ pipeline{
                 sh  'docker image prune -f'
                 
                 script {
-                input(message: "Are you sure you want to continue?", ok: "y")
+                    input(message: "Are you sure you want to continue?", ok: "y")
                 }
             }
         }

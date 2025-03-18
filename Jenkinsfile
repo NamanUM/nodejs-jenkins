@@ -32,9 +32,10 @@ pipeline{
         
         stage("push image to DockerHub"){
             steps{
-                 withDockerRegistry([credentialsId: 'dockerID', url: '']) {
-                    sh 'docker push naman211/fins:latest'
+                 docker.withRegistry('', 'docker-hub') {
+                     sh 'docker push naman211/fins:latest'
                  }
+
             }
        }
     }

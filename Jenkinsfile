@@ -31,11 +31,12 @@ pipeline{
         }
         
         stage("push image to DockerHub"){
-            steps{
-                 docker.withRegistry('', 'docker-hub') {
+            steps{ 
+                script {
+                    docker.withRegistry('', 'docker-hub') {
                      sh 'docker push naman211/fins:latest'
-                 }
-
+                    }
+                }
             }
        }
     }

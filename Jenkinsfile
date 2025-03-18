@@ -42,7 +42,12 @@ pipeline{
                     }
                 }
             }
-       }
+        }
+        stage('Deploy stage') {
+            steps {
+                sh './deploy.sh'
+            }
+        }
     }
 }
 

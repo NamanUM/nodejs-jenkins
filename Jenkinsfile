@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'git-token', variable: 'GITHUB_TOKEN')]) {
-                        sh 'git clone https://$GITHUB_TOKEN@github.com/NamanUM/nodejs-jenkins.git'
+                        sh 'git pull https://$GITHUB_TOKEN@github.com/NamanUM/nodejs-jenkins.git'
                     }
                 }
             }

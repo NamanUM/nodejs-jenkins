@@ -9,7 +9,7 @@ pipeline {
          stage("GitHub checkout") {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'your-github-token-id', variable: 'GITHUB_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'git-token', variable: 'GITHUB_TOKEN')]) {
                         sh 'git clone https://$GITHUB_TOKEN@github.com/NamanUM/nodejs-jenkins.git'
                     }
                 }
@@ -45,13 +45,5 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                sshagent(['backend-server-ssh']) {
-                    sshPublisher(publishers: [sshPublisherDesc(configName: 'backend-server', transfers: [scpXfer(cleanRemote: false, direction: 'PUSH', execCommand: 'chmod +x deploy.sh && ./deploy.sh', makeEmptyDirs: false, noDefaultExcludes: false, pattern: 'deploy.sh', remoteDirectory: '/path/to/your/backend')], usePromotion: false, useWorkspaceInPromotion: false, verbose: true)])
-                }
-            }
-        }
-
     }
 }

@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
     
@@ -43,6 +44,11 @@ pipeline {
                      sh 'docker push naman211/fins:latest'
                     }
                 }
+            }
+        }
+        stage("deploy"){
+            steps{
+                sh './deploy.sh'
             }
         }
     }

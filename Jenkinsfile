@@ -43,9 +43,11 @@ pipeline{
                 }
             }
         }
-        stage('Deploy stage') {
+        stage('Deploy') {
             steps {
-                sh './deploy.sh'
+                sshagent(['backend-server-ssh']) { // Use the credential ID
+                    sshPublisher(publishers: [sshPublisherDesc(configName: 'backend-server', transfers: [scpXfer(cleanRemote: false, direction: 'PUSH', execCommand: 'chmod +x deploy.sh && ./deploy.sh', makeEmptyDirs: false, noDefaultExcludes: false, pattern: 'deploy.sh', remoteDirectory: '/path/to/your/backend')], usePromotion: false, useWorkspaceInPromotion: false, verbose: true)])
+                }
             }
         }
         stage('Deploy') {

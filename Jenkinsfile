@@ -9,7 +9,9 @@ pipeline {
          stage("GitHub checkout") {
             steps {
                 script {
-                    git branch: 'master', url: 'https://github.com/NamanUM/nodejs-jenkins.git' 
+                    withCredentials([string(credentialsId: 'your-github-token-id', variable: 'GITHUB_TOKEN')]) {
+                        sh 'git clone https://$GITHUB_TOKEN@github.com/NamanUM/nodejs-jenkins.git'
+                    }
                 }
             }
         }

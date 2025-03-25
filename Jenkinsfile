@@ -32,7 +32,7 @@ pipeline {
         stage("Build and Push Docker Image") {
             steps {
                 script {
-                    docker.withRegistry('', 'docker_hub_credentials') {
+                    docker.withRegistry('', 'docker-hub') {
                         sh 'docker build -t naman211/my-new-image:latest .'
                         sh 'docker push naman211/my-new-image:latest'
                     }

@@ -2,6 +2,9 @@
 
 NEW_IMAGE_NAME="naman211/my-new-image:latest" # Change this to your new image name
 
+# Log in to Docker Hub using Jenkins-provided credentials.
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
 # Remove the container based on the name of the image it uses.
 node_app=$(docker ps -a --filter "ancestor=$NEW_IMAGE_NAME" | awk 'NR>1 {print $1}')
 

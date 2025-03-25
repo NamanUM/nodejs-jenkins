@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     
@@ -53,6 +52,7 @@ pipeline {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh './deploy.sh'
+               }
             }
         }
     }

@@ -29,12 +29,15 @@ pipeline {
                 }
             }
         }
-        stage("build docker images"){
-            steps{
-               
-            sh 'docker images'
-            sh 'docker build -t naman211/fins:latest .'
-           }
+        stage("Build and Push Docker Image") {
+            steps {
+                script {
+                    docker.withRegistry('', 'docker_hub_credentials') {
+                        sh 'docker build -t naman211/my-new-image:latest .'
+                        sh 'docker push naman211/my-new-image:latest'
+                    }
+                }
+            }
         }
         
         stage("push image to DockerHub"){
@@ -47,11 +50,10 @@ pipeline {
             }
         }
         stage("deploy"){
-    steps{
-        withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-            sh './deploy.sh'
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh './deploy.sh'
+            }
         }
-    }
-}
     }
 }

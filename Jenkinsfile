@@ -32,8 +32,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'docker-hub') {
-                        sh 'docker build -t naman211/my-new-image:latest .'
-                        sh 'docker push naman211/my-new-image:latest'
+                        sh 'docker build -t naman211/my-image:latest .'
+                        sh 'docker push naman211/my-image:latest'
                     }
                 }
             }

@@ -48,19 +48,12 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Node.js Server') {
-            steps {
-                sshagent(['ssh-key']) {
-                    sh '''
-                    ssh -o StrictHostKeyChecking=no jenkins@35.172.0.92 <<EOF
-                        docker pull naman211/backend:latest
-                        docker stop backend || true
-                        docker rm backend || true
-                        docker run -d --name backend -p 3000:3000 naman211/backend:latest
-                    EOF
-                    '''
+        stage("deploy"){
+             steps{
+                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                     sh './deploy.sh'
                 }
-            }
-        }
+             }
+         }
     }
 }

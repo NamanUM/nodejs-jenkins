@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Deploy to Node.js Server') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS'), sshUserPrivateKey(credentialsId: 'ubuntu', keyFileVariable: 'KEY_FILE')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS'), sshUserPrivateKey(credentialsId: 'ssh-agent', keyFileVariable: 'KEY_FILE')]) {
                     sshagent(['ssh-agent']) {
                         sh """
                             ssh -o StrictHostKeyChecking=no ubuntu@35.172.0.92 '

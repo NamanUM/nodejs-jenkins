@@ -60,8 +60,12 @@ pipeline {
                          EOF
                      '''
                  }
+                 script {
+                    docker.withRegistry('', 'docker-hub') {
+                     sh 'docker pull naman211/fins:latest'
+                    }
+                }
             }
         }
-
     }
 }

@@ -52,7 +52,7 @@ pipeline {
             steps {
                  sshagent(['ssh-agent']) {
                      sh '''
-                         ssh -o StrictHostKeyChecking=no abc@35.172.0.92 <<EOF
+                         ssh -o StrictHostKeyChecking=no ubuntu@35.172.0.92 <<EOF
                          docker pull naman211/backend:latest
                          docker stop backend || true
                          docker rm backend || true

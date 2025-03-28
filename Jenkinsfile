@@ -50,19 +50,17 @@ pipeline {
         }
         stage('Deploy to Node.js Server') {
             steps {
-                 sshagent(['ssh-agent']) {
-                     sh '''
-                         ssh -o StrictHostKeyChecking=no ubuntu@35.172.0.92 <<EOF
-                         docker pull naman211/backend:latest
-                         docker stop backend || true
-                         docker rm backend || true
-                         docker run -d --name backend -p 3000:3000 naman211/backend:latest
-                         EOF
-                     '''
-                 }
-                 script {
-                    docker.withRegistry('', 'docker-hub') {
-                     sh 'docker pull naman211/fins:latest'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sshagent(['ssh-agent']) {
+                        sh '''
+                            ssh -o StrictHostKeyChecking=no ubuntu@35.172.0.92 <<EOF
+                            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                            docker pull naman211/fins:latest
+                            docker stop backend || true
+                            docker rm backend || true
+                            docker run -d --name backend -p 3000:3000 naman211/fins:latest
+                            EOF
+                        '''
                     }
                 }
             }

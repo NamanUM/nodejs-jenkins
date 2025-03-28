@@ -53,12 +53,19 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sshagent(['ssh-agent']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@35.172.0.92 <<EOF
+                            ssh -o StrictHostKeyChecking=no ubuntu@35.172.0.92 << 'EOF'
+                            set -e  # Exit if any command fails
+
                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                            docker pull naman211/fins:latest
-                            docker stop backend || true
-                            docker rm backend || true
-                            docker run -d --name backend -p 3000:3000 naman211/fins:latest
+                            docker pull naman211/backend:latest
+                    
+                            # Check if the container exists before trying to stop and remove it
+                            if [ "$(docker ps -aq -f name=backend)" ]; then
+                                docker stop backend
+                                docker rm backend
+                            fi
+
+                            docker run -d --name backend -p 3000:3000 naman211/backend:latest
                             EOF
                         '''
                     }

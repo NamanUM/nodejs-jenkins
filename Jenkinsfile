@@ -51,7 +51,7 @@ pipeline {
         stage('Deploy to Node.js Server') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS'), sshUserPrivateKey(credentialsId: 'ubuntu', keyFileVariable: 'KEY_FILE')]) {
-                    sshagent(['ubuntu']) {
+                    sshagent(['ssh-agent']) {
                         sh """
                             ssh -o StrictHostKeyChecking=no ubuntu@35.172.0.92 '
                                 echo "\$DOCKER_PASS" | docker login --username "\$DOCKER_USER" --password-stdin \n

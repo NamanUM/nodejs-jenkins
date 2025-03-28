@@ -57,6 +57,7 @@ pipeline {
                                 echo "\$DOCKER_PASS" | docker login --username "\$DOCKER_USER" --password-stdin \n
                                 docker pull naman211/fins:latest \n
                                 docker run -d -p 3000:3000 --name backend naman211/fins:latest \n
+                                /home/ubuntu/deploy.sh
                                 echo "Deployment successful" \n
                             '
                         """

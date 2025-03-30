@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         DOCKER_CREDENTIALS_ID = "docker_hub"
+        SONARQUBE_URL = "52.54.25.234:9000"
     }
     
     stages{
@@ -15,6 +16,63 @@ pipeline {
                 }
             }
         }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    sonar-scanner \
+                        -Dsonar.projectKey=my-nodejs-project \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=$SONARQUBE_URL \
+                        -Dsonar.login=$SONARQUBE_TOKEN \
+                        -Dsonar.exclusions=node_modules/**,tests/**
+                    '''
+                }
+            }
+        }
+
+        stage('SonarQube Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('Vulnerability Scan') {
+            steps {
+                sh '''
+                dependency-check.sh --project "My Project" --scan . --format HTML --out reports/
+                '''
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'reports/*.html', fingerprint: true
+                }
+                failure {
+                    echo "Vulnerability scan failed. Check the report in Jenkins artifacts."
+                }
+            }
+        }
+
+        stage('Security Scan - Trivy') {
+            steps {
+                sh '''
+                docker pull aquasec/trivy
+                trivy fs --scanners vuln,config,secret --format json -o trivy-report.json .
+                '''
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
+                }
+                failure {
+                    echo "Security scan detected vulnerabilities. Review the Trivy report."
+                }
+            }
+        }
+        
         stage("Remove all old images"){
             steps{
                 sh 'printenv'

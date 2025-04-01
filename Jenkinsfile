@@ -21,6 +21,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh '''
+                    export PATH=$PATH:/opt/sonar-scanner-5.0.1.3006-linux/bin
                     sonar-scanner \
                         -Dsonar.projectKey=my-nodejs-project \
                         -Dsonar.sources=. \

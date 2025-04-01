@@ -7,10 +7,7 @@ pipeline {
         SONARQUBE_CREDENTIALS_ID = "sonar_qube"
         SONARQUBE_TOKEN = "sonar"
     }
-
-    tools {
-        sonarScanner 'sonar-scanner'
-    }
+    
     stages{
          stage("GitHub checkout") {
             steps {

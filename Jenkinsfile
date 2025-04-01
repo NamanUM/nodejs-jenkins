@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = "docker_hub"
         SONARQUBE_URL = "http://52.54.25.234:9000"
+        SONARQUBE_TOKEN = "sonar"
     }
     
     stages{

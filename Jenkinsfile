@@ -4,9 +4,13 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = "docker_hub"
         SONARQUBE_URL = "http://52.54.25.234:9000"
+        SONARQUBE_CREDENTIALS_ID = "sonar_qube"
         SONARQUBE_TOKEN = "sonar"
     }
-    
+
+    tools {
+        sonarScanner 'sonar-scanner'
+    }
     stages{
          stage("GitHub checkout") {
             steps {

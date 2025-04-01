@@ -5,7 +5,6 @@ pipeline {
         DOCKER_CREDENTIALS_ID = "docker_hub"
         SONARQUBE_URL = "http://52.54.25.234:9000"
         SONARQUBE_CREDENTIALS_ID = "sonar_qube"
-        SONARQUBE_TOKEN = "sonar"
     }
     
     stages{
@@ -28,7 +27,6 @@ pipeline {
                         -Dsonar.projectKey=my-nodejs-project \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=$SONARQUBE_URL \
-                        -Dsonar.login=$SONARQUBE_TOKEN \
                         -Dsonar.exclusions=node_modules/**,tests/**
                     '''
                 }

@@ -43,9 +43,11 @@ pipeline {
 
         stage('Vulnerability Scan') {
             steps {
-                sh '''
-                dependency-check.sh --project "My Project" --scan . --format HTML --out reports/
-                '''
+                script {
+                    sh '''
+                    /opt/dependency-check/bin/dependency-check.sh --project "My Project" --scan . --format HTML --out reports/
+                    '''
+                }
             }
             post {
                 always {
